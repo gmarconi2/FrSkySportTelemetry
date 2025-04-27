@@ -1,6 +1,6 @@
 /*
-  FrSky sensor base class for Teensy 3.x/4.0/LC, ESP8266, ATmega2560 and ATmega328P (Mega) based boards (e.g. Pro Mini, Nano, Uno)
-  (c) Pawelsky 202000503
+  FrSky sensor base class for Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
+  (c) Pawelsky 20210509
   Not for commercial use
 */
 
@@ -28,6 +28,7 @@ class FrSkySportSensor
 
   protected:
     FrSkySportSensor(SensorId id);
+    static void sendSingleData(FrSkySportSingleWireSerial& serial, uint16_t dataIdConst, uint16_t& dataIdRef, uint32_t data, uint32_t dataTimeConst, uint32_t& dataTimeRef, uint32_t now);
     SensorId sensorId;
     uint8_t sensorDataIdx;
 

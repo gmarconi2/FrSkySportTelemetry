@@ -1,6 +1,6 @@
 /*
-  FrSky telemetry decoder class for Teensy 3.x/4.0/LC, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
-  (c) Pawelsky 20200503
+  FrSky telemetry decoder class for Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
+  (c) Pawelsky 20210108
   Not for commercial use
 */
 
@@ -94,7 +94,7 @@ uint16_t FrSkySportDecoder::decode()
       {
         if(hasStuffing == true) { byte ^= 0x20; hasStuffing = false; }                                // Xor next byte with 0x20 to remove stuffing
         if (state == SENSOR_ID) { id = byte; state = DATA_FRAME; }                                    // Store the sensor ID, start sarching for data frame
-        else if((state == DATA_FRAME) && ((byte == FRSKY_SENSOR_DATA_FRAME) || (byte == FRSKY_SENSOR_DATA_FRAME))) 
+        else if((state == DATA_FRAME) && ((byte == FRSKY_SENSOR_DATA_FRAME) || (byte == FRSKY_SENSOR_EMPTY_FRAME))) 
         {
           if(pollingClass != NULL) pollingClass->sensorActive((FrSkySportSensor::SensorId)id);        // Sensor has responded, if polling is enabled notify the polling class
           if(byte == FRSKY_SENSOR_DATA_FRAME) { crc = byte; state = APP_ID_BYTE_1; }                  // If data frame found, initialize the CRC and start collecting APP ID

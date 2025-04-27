@@ -1,6 +1,6 @@
 /*
-  FrSky Variometer (high precision) sensor class for Teensy 3.x/4.0/LC, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
-  (c) Pawelsky 202000503
+  FrSky Variometer (high precision) sensor class for Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
+  (c) Pawelsky 20210509
   Not for commercial use
 */
 
@@ -22,30 +22,10 @@ uint16_t FrSkySportSensorVario::send(FrSkySportSingleWireSerial& serial, uint8_t
     switch(sensorDataIdx)
     {
       case 0:
-        dataId = VARIO_ALT_DATA_ID;
-        if(now > altitudeTime)
-        {
-          altitudeTime = now + VARIO_ALT_DATA_PERIOD;
-          serial.sendData(dataId, altitudeData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, VARIO_ALT_DATA_ID, dataId, altitudeData, VARIO_ALT_DATA_PERIOD, altitudeTime, now);
         break;
       case 1:
-        dataId = VARIO_VSI_DATA_ID;
-        if(now > vsiTime)
-        {
-          vsiTime = now + VARIO_VSI_DATA_PERIOD;
-          serial.sendData(dataId, vsiData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, VARIO_VSI_DATA_ID, dataId, vsiData, VARIO_VSI_DATA_PERIOD, vsiTime, now);
         break;
     }
     sensorDataIdx++;

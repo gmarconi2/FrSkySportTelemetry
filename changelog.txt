@@ -1,5 +1,25 @@
 FrSkySportTelemetry library changelog
 --------------------------------------
+Version 20250412
+  [FIX] Fixed Serial2 and Serial4 not working correctly on Teensy 4.x
+  [FIX] Corrected #define POLLING_ENABLED in FrSkySportTelemetryExample.ino to be commented out by default
+  [FIX] Added some missing error messages if an unknown board is used 
+
+Version 20210509
+  [NEW] Added Gas Suite sensor
+  [NEW] Simplified send function in sensors
+  [FIX] Removed unnecessary semicolon from GPS_DATE_TIME_DATA_PERIOD define
+
+Version 20210110
+  [FIX] Fixed unnecessary switching of TX/RX mode when serial with EVTINV is used
+
+Version 20210108
+  [FIX] Fixed detecting empty frame in decoder
+  [NEW] Added support for non-inverted two wire serial (when used e.g. with external S.Port inverter or devices with regular serial S.Port telemetry output such as Jumper R8 receiver or Pixhawk)
+  [NEW] Added support for Teensy 4.1
+  [FIX] Refactored the FrSkySportSingleWireSerial code to make it more readable
+  [FIX] Minor editorial corrections
+
 Version 20200503
   [NEW] Added FrSkySportPollingDynamic polling class that polls active sensors more often and FrSkySportPollingSimple that polls sensors one by on in loop
   [NEW] Updated examples to use the newly added polling classes

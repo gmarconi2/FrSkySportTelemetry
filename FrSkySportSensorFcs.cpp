@@ -1,6 +1,6 @@
 /*
-  FrSky FCS-40A/FCS-150A current sensor class for Teensy 3.x/4.0/LC, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
-  (c) Pawelsky 202000503
+  FrSky FCS-40A/FCS-150A current sensor class for Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
+  (c) Pawelsky 20210509
   Not for commercial use
 */
 
@@ -22,30 +22,10 @@ uint16_t FrSkySportSensorFcs::send(FrSkySportSingleWireSerial& serial, uint8_t i
     switch(sensorDataIdx)
     {
       case 0:
-        dataId = FCS_CURR_DATA_ID;
-        if(now > currentTime)
-        {
-          currentTime = now + FCS_CURR_DATA_PERIOD;
-          serial.sendData(dataId, currentData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, FCS_CURR_DATA_ID, dataId, currentData, FCS_CURR_DATA_PERIOD, currentTime, now);
         break;
       case 1:
-        dataId = FCS_VOLT_DATA_ID;
-        if(now > voltageTime)
-        {
-          voltageTime = now + FCS_VOLT_DATA_PERIOD;
-          serial.sendData(dataId, voltageData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, FCS_VOLT_DATA_ID, dataId, voltageData, FCS_VOLT_DATA_PERIOD, voltageTime, now);
         break;
     }
     sensorDataIdx++;

@@ -1,6 +1,6 @@
 /*
-  FrSky ESC sensor class for Teensy 3.x/4.0/LC, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
-  (c) Pawelsky 202000503
+  FrSky ESC sensor class for Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
+  (c) Pawelsky 20210509
   Not for commercial use
 */
 
@@ -24,56 +24,16 @@ uint16_t FrSkySportSensorEsc::send(FrSkySportSingleWireSerial& serial, uint8_t i
     switch(sensorDataIdx)
     {
       case 0:
-        dataId = ESC_POWER_DATA_ID;
-        if(now > powerTime)
-        {
-          powerTime = now + ESC_POWER_DATA_PERIOD;
-          serial.sendData(dataId, powerData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, ESC_POWER_DATA_ID, dataId, powerData, ESC_POWER_DATA_PERIOD, powerTime, now);
         break;
       case 1:
-        dataId = ESC_RPM_CONS_DATA_ID;
-        if(now > rpmConsTime)
-        {
-          rpmConsTime = now + ESC_RPM_CONS_DATA_PERIOD;
-          serial.sendData(dataId, rpmConsData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, ESC_RPM_CONS_DATA_ID, dataId, rpmConsData, ESC_RPM_CONS_DATA_PERIOD, rpmConsTime, now);
         break;
       case 2:
-        dataId = ESC_TEMP_DATA_ID;
-        if(now > tempTime)
-        {
-          tempTime = now + ESC_TEMP_DATA_PERIOD;
-          serial.sendData(dataId, tempData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, ESC_TEMP_DATA_ID, dataId, tempData, ESC_TEMP_DATA_PERIOD, tempTime, now);
         break;
       case 3:
-        dataId = ESC_SBEC_DATA_ID;
-        if(now > sbecTime)
-        {
-          sbecTime = now + ESC_SBEC_DATA_PERIOD;
-          serial.sendData(dataId, sbecData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, ESC_SBEC_DATA_ID, dataId, sbecData, ESC_SBEC_DATA_PERIOD, sbecTime, now);
         break;
     }
     sensorDataIdx++;

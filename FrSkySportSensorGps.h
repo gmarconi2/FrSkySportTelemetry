@@ -1,6 +1,6 @@
 /*
-  FrSky GPS sensor class for Teensy 3.x/4.0/LC, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
-  (c) Pawelsky 202000503
+  FrSky GPS sensor class for Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
+  (c) Pawelsky 20210509
   Not for commercial use
 */
 
@@ -21,7 +21,7 @@
 #define GPS_ALT_DATA_PERIOD       500
 #define GPS_SPEED_DATA_PERIOD     500
 #define GPS_COG_DATA_PERIOD       500
-#define GPS_DATE_TIME_DATA_PERIOD 10000;
+#define GPS_DATE_TIME_DATA_PERIOD 10000
 
 
 class FrSkySportSensorGps : public FrSkySportSensor

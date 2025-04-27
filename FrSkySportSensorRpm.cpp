@@ -1,6 +1,6 @@
 /*
-  FrSky RPM sensor class for Teensy 3.x/4.0/LC and 328P, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
-  (c) Pawelsky 202000503
+  FrSky RPM sensor class for Teensy LC/3.x/4.x, ESP8266, ATmega2560 (Mega) and ATmega328P based boards (e.g. Pro Mini, Nano, Uno)
+  (c) Pawelsky 20210509
   Not for commercial use
 */
 
@@ -23,43 +23,13 @@ uint16_t FrSkySportSensorRpm::send(FrSkySportSingleWireSerial& serial, uint8_t i
     switch(sensorDataIdx)
     {
       case 0:
-        dataId = RPM_T1_DATA_ID;
-        if(now > t1Time)
-        {
-          t1Time = now + RPM_T1_DATA_PERIOD;
-          serial.sendData(dataId, t1Data);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, RPM_T1_DATA_ID, dataId, t1Data, RPM_T1_DATA_PERIOD, t1Time, now);
         break;
       case 1:
-        dataId = RPM_T2_DATA_ID;
-        if(now > t2Time)
-        {
-          t2Time = now + RPM_T2_DATA_PERIOD;
-          serial.sendData(dataId, t2Data);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, RPM_T2_DATA_ID, dataId, t2Data, RPM_T2_DATA_PERIOD, t2Time, now);
         break;
       case 2:
-        dataId = RPM_ROT_DATA_ID;
-        if(now > rpmTime)
-        {
-          rpmTime = now + RPM_ROT_DATA_PERIOD;
-          serial.sendData(dataId, rpmData);
-        }
-        else
-        {
-          serial.sendEmpty(dataId);
-          dataId = SENSOR_EMPTY_DATA_ID;
-        }
+        sendSingleData(serial, RPM_ROT_DATA_ID, dataId, rpmData, RPM_ROT_DATA_PERIOD, rpmTime, now);
         break;
     }
     sensorDataIdx++;
